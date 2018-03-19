@@ -1,0 +1,165 @@
+
+/*
+   RC522门禁系统
+   by ac-dc
+   接线：
+   RC522:     ARDUINO
+   SDA<------->D10
+   SCK<------->D13
+   MOSI<------>D11
+   MISO<------>D12
+   RST<------->D9
+   IRQ<------->不接
+   3V3<------->3.3V（千万不能接5V）
+   GND<------->GND
+   LCD:       ARDUINO
+   SCL<------->SCL
+   SDA<------->SDA
+*/
+#include <LiquidCrystal_I2C.h>
+#include <Wire.h>
+#include <SPI.h>
+#include <RFID.h>
+
+RFID rfid(10, 9);  //D10--读卡器SS引脚、D9--读卡器RST引脚
+LiquidCrystal_I2C lcd(0x27, 16, 2);//每块lcd I2C地址都要修改
+
+
+#define Host 1 //人员人数
+
+unsigned char host[Host][5] //卡的数据（要换成你自己的卡号（去串口监视器例里看），也可以增加）
+{0xAE, 0x42, 0xC0, 0x59, 0x75};
+String comdata = "";
+boolean u;
+void setup() {
+  pinMode(2, OUTPUT);
+  digitalWrite(2, HIGH);//控制门锁
+  pinMode(5, OUTPUT);
+  digitalWrite(5, HIGH); //控制sim发送模块
+  pinMode(3, OUTPUT);
+  digitalWrite(3, LOW);
+  pinMode(4, OUTPUT);
+  digitalWrite(4, LOW);
+  Serial.begin(115200);
+  SPI.begin();
+  rfid.init();
+  lcd.init();
+  lcd.backlight();
+  lcd.print(" Welcome to use ");
+  delay(700);
+  lcd.clear();
+  lcd.print("Put card here");
+}
+ 
+void loop() {
+ 
+  if (rfid.isCard()) {
+    Serial.println("Find the card!");
+    //读取卡序列号
+    if (rfid.readCardSerial()) {
+      Serial.print("The card's number is  : ");
+      Serial.print(rfid.serNum[0], HEX);
+      Serial.print(host[0][0], HEX);
+      Serial.print(" ");
+      Serial.print(rfid.serNum[1], HEX);
+      Serial.print(host[0][1], HEX);
+      Serial.print(" ");
+      Serial.print(rfid.serNum[2], HEX);
+      Serial.print(host[0][2], HEX);
+      Serial.print(" ");
+      Serial.print(rfid.serNum[3], HEX);
+      Serial.print(host[0][3], HEX);
+      Serial.print(" ");
+      Serial.print(rfid.serNum[4], HEX);
+      Serial.print(host[0][4], HEX);
+      Serial.println(" ");
+      for(int i=0 ;i<Host;i++)
+      {
+      if ((rfid.serNum[0] == host[0][0]) && (rfid.serNum[1] == host[0][1]) && (rfid.serNum[2] == host[0][2]) && (rfid.serNum[3] == host[0][3]) && (rfid.serNum[4] == host[0][4])) 
+      {
+        u=1;
+        lcd.clear();
+        lcd.home();
+        lcd.print("   The Host1"+i);
+        lcd.setCursor(0, 1);
+        lcd.print("Welcome go back!");
+        digitalWrite(2, LOW);
+        digitalWrite(4, HIGH);
+        delay(500);
+        digitalWrite(4, LOW);
+        delay(500);
+        digitalWrite(4, HIGH);
+        delay(500);
+        digitalWrite(4, LOW);
+        delay(500);
+        delay(500);
+        digitalWrite(2, HIGH);
+        lcd.clear();
+        lcd.home();
+        lcd.print("Put card here");
+      }
+      }
+     if(!u){
+        lcd.clear();
+        lcd.home();
+         lcd.print("Unknown card");
+        digitalWrite(3, HIGH);
+        digitalWrite(4, HIGH);
+        delay(1000);
+        digitalWrite(4, LOW);
+        delay(200);
+        digitalWrite(4, HIGH);
+        delay(1000);
+        digitalWrite(4, LOW);
+        delay(200);
+        digitalWrite(3, LOW);
+        lcd.clear();
+        lcd.home();
+        lcd.print("Put card here");
+      }
+    }
+    //选卡，可返回卡容量（锁定卡片，防止多数读取），去掉本行将连续读卡
+    rfid.selectTag(rfid.serNum);
+  } 
+  rfid.halt();
+  u=0;
+   while (Serial.available() > 0)  
+    {
+        comdata += char(Serial.read());       
+ //       delay(2);
+    }
+    
+    if (comdata.length() > 0)
+    {
+     Serial.println(comdata);
+        if(comdata=="51")
+        {
+        digitalWrite(3, HIGH);
+        lcd.clear();
+        lcd.home();
+        lcd.setCursor(0, 1);
+        lcd.print("Welcome go back!");
+        digitalWrite(2, LOW);
+        digitalWrite(4, HIGH);
+        delay(500);
+        digitalWrite(4, LOW);
+        delay(500);
+        digitalWrite(4, HIGH);
+        delay(500);
+        digitalWrite(4, LOW);
+        delay(500);
+        delay(500);
+        digitalWrite(2, HIGH);
+        lcd.clear();
+        lcd.home();
+        digitalWrite(3, LOW);
+        }
+        if(comdata=="20")
+        {
+        digitalWrite(5, LOW);  
+        delay(100);
+        digitalWrite(5, HIGH); 
+        }
+     comdata =  "";
+    }
+}
