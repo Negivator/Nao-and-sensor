@@ -1,6 +1,6 @@
-# Nao-and-sensor
-A  smart home project based on Nao and networking.
+# A smart home system with Nao (robot) and Arduino
 
+## File description
 outdoor 控制门禁和电动锁的开关
 
 server_k 给kinect读取数据
