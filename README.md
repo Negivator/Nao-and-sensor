@@ -11,7 +11,7 @@ Server for the smart home devices
    - Connect to smart home center
    - Connect to Android App
    - Track all states of devices in the smart home system 
-   - Enable control devices remotely
+   - Enable controlling devices remotely
    - Save user data for Andriod App 
 
 2. arduino 
