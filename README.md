@@ -4,7 +4,7 @@ A project funded by National Undergraduate’s Platform for Innovation and Entre
 
 Shandong University, Jinan, China 2017.5-2018.05 
 
-## File description
+## Description
 
 1. online_server
 Server for the smart home devices
