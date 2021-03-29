@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.FinfoMapper" >
+  <resultMap id="BaseResultMap" type="model.Finfo" >
+    <result column="fid" property="fid" jdbcType="INTEGER" />
+    <result column="temperature" property="temperature" jdbcType="DOUBLE" />
+    <result column="humidity" property="humidity" jdbcType="DOUBLE" />
+    <result column="smoke" property="smoke" jdbcType="DOUBLE" />
+    <result column="a" property="a" jdbcType="DOUBLE" />
+    <result column="b" property="b" jdbcType="DOUBLE" />
+    <result column="c" property="c" jdbcType="DOUBLE" />
+    <result column="d" property="d" jdbcType="BIT" />
+    <result column="e" property="e" jdbcType="BIT" />
+    <result column="f" property="f" jdbcType="BIT" />
+    <result column="g" property="g" jdbcType="BIT" />
+    <result column="h" property="h" jdbcType="BIT" />
+    <result column="i" property="i" jdbcType="BIT" />
+    <result column="j" property="j" jdbcType="BIT" />
+    <result column="k" property="k" jdbcType="BIT" />
+    <result column="l" property="l" jdbcType="BIT" />
+    <result column="m" property="m" jdbcType="BIT" />
+  </resultMap>
+  <select id="select" parameterType="model.Finfo" resultType="model.Finfo">
+    select * from Finfo WHERE fid=#{fid,jdbcType=INTEGER}
+  </select>
+  <insert id="insert" parameterType="model.Finfo" >
+    insert into Finfo (fid, temperature, humidity, 
+      smoke, a, b, c, 
+      d, e, f, g, h, 
+      i, j, k, l, m
+      )
+    values (#{fid,jdbcType=INTEGER}, #{temperature,jdbcType=DOUBLE}, #{humidity,jdbcType=DOUBLE}, 
+      #{smoke,jdbcType=DOUBLE}, #{a,jdbcType=DOUBLE}, #{b,jdbcType=DOUBLE}, #{c,jdbcType=DOUBLE}, 
+      #{d,jdbcType=BIT}, #{e,jdbcType=BIT}, #{f,jdbcType=BIT}, #{g,jdbcType=BIT}, #{h,jdbcType=BIT}, 
+      #{i,jdbcType=BIT}, #{j,jdbcType=BIT}, #{k,jdbcType=BIT}, #{l,jdbcType=BIT}, #{m,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="model.Finfo" >
+    insert into Finfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fid != null" >
+        fid,
+      </if>
+      <if test="temperature != null" >
+        temperature,
+      </if>
+      <if test="humidity != null" >
+        humidity,
+      </if>
+      <if test="smoke != null" >
+        smoke,
+      </if>
+      <if test="a != null" >
+        a,
+      </if>
+      <if test="b != null" >
+        b,
+      </if>
+      <if test="c != null" >
+        c,
+      </if>
+      <if test="d != null" >
+        d,
+      </if>
+      <if test="e != null" >
+        e,
+      </if>
+      <if test="f != null" >
+        f,
+      </if>
+      <if test="g != null" >
+        g,
+      </if>
+      <if test="h != null" >
+        h,
+      </if>
+      <if test="i != null" >
+        i,
+      </if>
+      <if test="j != null" >
+        j,
+      </if>
+      <if test="k != null" >
+        k,
+      </if>
+      <if test="l != null" >
+        l,
+      </if>
+      <if test="m != null" >
+        m,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fid != null" >
+        #{fid,jdbcType=INTEGER},
+      </if>
+      <if test="temperature != null" >
+        #{temperature,jdbcType=DOUBLE},
+      </if>
+      <if test="humidity != null" >
+        #{humidity,jdbcType=DOUBLE},
+      </if>
+      <if test="smoke != null" >
+        #{smoke,jdbcType=DOUBLE},
+      </if>
+      <if test="a != null" >
+        #{a,jdbcType=DOUBLE},
+      </if>
+      <if test="b != null" >
+        #{b,jdbcType=DOUBLE},
+      </if>
+      <if test="c != null" >
+        #{c,jdbcType=DOUBLE},
+      </if>
+      <if test="d != null" >
+        #{d,jdbcType=BIT},
+      </if>
+      <if test="e != null" >
+        #{e,jdbcType=BIT},
+      </if>
+      <if test="f != null" >
+        #{f,jdbcType=BIT},
+      </if>
+      <if test="g != null" >
+        #{g,jdbcType=BIT},
+      </if>
+      <if test="h != null" >
+        #{h,jdbcType=BIT},
+      </if>
+      <if test="i != null" >
+        #{i,jdbcType=BIT},
+      </if>
+      <if test="j != null" >
+        #{j,jdbcType=BIT},
+      </if>
+      <if test="k != null" >
+        #{k,jdbcType=BIT},
+      </if>
+      <if test="l != null" >
+        #{l,jdbcType=BIT},
+      </if>
+      <if test="m != null" >
+        #{m,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="model.Finfo">
+    update Finfo
+      <set>
+        <if test="temperature != null" >
+          temperature=#{temperature,jdbcType=DOUBLE},
+        </if>
+        <if test="humidity != null" >
+          humidity=#{humidity,jdbcType=DOUBLE},
+        </if>
+        <if test="smoke != null" >
+          smoke=#{smoke,jdbcType=DOUBLE},
+        </if>
+        <if test="a != null" >
+          a=#{a,jdbcType=DOUBLE},
+        </if>
+        <if test="b != null" >
+          b=#{b,jdbcType=DOUBLE},
+        </if>
+        <if test="c != null" >
+          c=#{c,jdbcType=DOUBLE},
+        </if>
+        <if test="d != null" >
+          d=#{d,jdbcType=BIT},
+        </if>
+        <if test="e != null" >
+          e=#{e,jdbcType=BIT},
+        </if>
+        <if test="f != null" >
+          f=#{f,jdbcType=BIT},
+        </if>
+        <if test="g != null" >
+          g=#{g,jdbcType=BIT},
+        </if>
+        <if test="h != null" >
+          h=#{h,jdbcType=BIT},
+        </if>
+        <if test="i != null" >
+          i=#{i,jdbcType=BIT},
+        </if>
+        <if test="j != null" >
+          j=#{j,jdbcType=BIT},
+        </if>
+        <if test="k != null" >
+          k=#{k,jdbcType=BIT},
+        </if>
+        <if test="l != null" >
+          l=#{l,jdbcType=BIT},
+        </if>
+        <if test="m != null" >
+          m=#{m,jdbcType=BIT}
+        </if>
+      </set>
+    where fid=#{fid,jdbcType=INTEGER}
+  </update>
+</mapper>
