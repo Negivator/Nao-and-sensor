@@ -1,5 +1,10 @@
 # A smart home system with Nao (robot) and Arduino
 
+
+A project funded by National Undergraduate’s Platform for Innovation and Entrepreneurship Training Program，
+
+Shandong University，Jinan，China 2017.5-2018.05 
+
 ## File description
 
 1. online_server
